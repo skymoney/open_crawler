@@ -1,14 +1,28 @@
 @(message: String)
 
-@main("Open Crawler") {
+@morecss={
+<style type="text/css">
+	.searchWrapper{
+		margin-left: 30%;
+		margin-top: 15%;
+		margin-right: 20%;
+	}
+</style>
+}
+
+@main("Open Crawler")(morecss){
 <style type="text/css">
 	
 </style>
 <div class="container">
 	<div class="searchWrapper">
-		<form>
-			<input type="text">
-			<input type="submit">
+		<form action='/' method='POST' class='form-inline'>
+			<div class='col-xs-8'>
+			<input class='form-control' type="text" name='seedUrl' style="width:100%">
+			</div>
+			<div class='col-xs-2'>
+			<button class='btn btn-primary' type="submit">启动</button>
+			</div>
 		</form>
 	</div>
 </div>
