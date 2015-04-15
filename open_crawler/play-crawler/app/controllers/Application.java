@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.Map;
 
+import crawl.PageCrawler;
 import play.*;
 import play.mvc.*;
 import rabbitmq.RabbitClient;
@@ -21,7 +22,7 @@ public class Application extends Controller {
     		UrlPage urlPage = new UrlPage("", seedUrl);
     		urlPage.setType("page");
     		
-    		RabbitServer.publish("play_crawler", urlPage);
+    		//RabbitServer.publish("play_crawler", urlPage);
     		
     		return ok("seed url received");
     	}
@@ -29,6 +30,35 @@ public class Application extends Controller {
         return ok(index.render("Open Crawler"));
     }
 
+    public static Result monitor(){
+    	return ok(monitor.render("Monitor Task"));
+    }
+    
+    public static Result submit(){
+    	Map<String, String[]> formData = request().body().asFormUrlEncoded();
+    	String seedUrl = formData.get("seedUrl")[0];
+    	
+    	//提交任务，并启动
+    	UrlPage urlPage = new UrlPage("", seedUrl);
+    	urlPage.setType("page");
+    	
+    	RabbitServer.publish("play_crawler", urlPage);
+    	int taskCount = 0;
+    	taskCount += 1;
+    	
+    	while(taskCount != 0){
+    		
+    		String url = RabbitClient.consumePage();
+    		System.out.println("Get page url " + url);
+    		PageCrawler pc = new PageCrawler(url);
+    		pc.start();
+    		
+    		taskCount --;
+    	}
+    	
+    	return ok(seedUrl);
+    }
+    
     public static Result statPage(){
     	String pageInfo = RabbitClient.consumePage();
     	return ok("stat page here \n " + pageInfo);
