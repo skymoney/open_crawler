@@ -57,7 +57,7 @@ public class RabbitClient {
 			QueueingConsumer.Delivery deliver = pageConsumer.nextDelivery();
 			UrlPage urlPage = (UrlPage)RabbitUtil.fromBytes(deliver.getBody());
 			
-			return urlPage.getType() + " : " + urlPage.getUrl();
+			return urlPage.getUrl();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -71,7 +71,6 @@ public class RabbitClient {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return null;
 	}
 }

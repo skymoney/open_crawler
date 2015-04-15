@@ -7,6 +7,6 @@ public class PageCrawler extends Thread{
 	}
 	
 	public void start(){
-		System.out.println("start to crawl page");
+		System.out.println("========start to crawl page" + url);
 	}
 }

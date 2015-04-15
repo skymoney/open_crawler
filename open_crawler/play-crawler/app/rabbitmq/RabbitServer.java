@@ -43,7 +43,7 @@ public class RabbitServer {
 		
 		try {
 			channel.basicPublish(exchangeName, ((UrlPage)message).getType(), null,RabbitUtil.toBytes(message));
-			System.out.println("Sent to " + exchangeName + " : " + ((UrlPage)message).getUrl());
+			//System.out.println("Sent to " + exchangeName + " : " + ((UrlPage)message).getUrl());
 		} catch (IOException e) {
 			
 		}

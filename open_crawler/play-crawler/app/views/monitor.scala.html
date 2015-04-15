@@ -1,0 +1,45 @@
+@(title: String)
+
+@morecss = {
+<style type="text/css">
+	.monitorBoard{
+		margin-left:10%;
+		margin-top: 5%;
+	}
+</style>
+}
+
+@main(title)(morecss){
+<div class="container">
+	<div class="col-sm-10 col-offset-2 monitorBoard">
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>ID</th>
+					<th>Url</th>
+					<th>Name</th>
+					<th>Status</th>
+					<th>Ops</th>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>http://bbs.nju.edu.cn</td>
+					<td>bbs</td>
+					<td id="taskStatus">Pending</td>
+					<td><button class="btn btn-success btn-xs" id="startTask" onclick="javascript:startTask()">Start</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<script>
+ function startTask(){
+ 	$.post("/task/submit", {
+ 		'seedUrl': 'http://bbs.nju.edu.cn'
+ 	}, function(data){
+ 		//alert(data);
+ 		$("#taskStatus").html("Runing");
+ 	});
+ }
+</script>
+}
